@@ -1,0 +1,16 @@
+{
+  "preset": "laravel",
+  "rules": {
+    "binary_operator_spaces": {
+      "default": "single_space"
+    },
+    "single_quote": true,
+    "trailing_comma_in_multiline": true,
+    "phpdoc_align": false
+  },
+  "exclude": [
+    "vendor",
+    "storage",
+    "bootstrap/cache"
+  ]
+}

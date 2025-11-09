@@ -1,0 +1,52 @@
+#!/bin/sh
+# Laravel pre-commit hook
+# Runs Pint, PHPStan, and whitespace checks before committing.
+# Automatically trims trailing whitespace from staged files.
+
+set -e
+exec 1>&2
+
+# === 0. Auto-trim trailing whitespace in staged files ===
+echo "✂️  Trimming trailing whitespace in staged files..."
+git diff --cached --name-only --diff-filter=ACM | while read file; do
+    if [ -f "$file" ]; then
+        # Trim trailing whitespace
+        sed -i 's/[[:space:]]\+$//' "$file"
+        git add "$file"
+    fi
+done
+
+# === 1. Run Laravel Pint ===
+echo "🔍 Running Laravel Pint..."
+if ! src/vendor/bin/pint --test > /dev/null 2>&1; then
+    echo "⚠️  Pint found code style issues. Fixing..."
+    src/vendor/bin/pint
+    echo "✅  Pint auto-fixed your code. Please stage your changes again and re-commit."
+    exit 1
+else
+    echo "✅ Code style OK."
+fi
+
+# === 2. Run PHPStan (Larastan) ===
+echo "🔍 Running PHPStan (Larastan)..."
+if ! src/vendor/bin/phpstan analyse --configuration=src/phpstan.neon > /dev/null 2>&1; then
+    echo "⚠️ PHPStan found issues. Please fix before committing."
+    exit 1
+else
+    echo "✅ PHPStan check passed."
+fi
+
+# === 3. Check for remaining whitespace errors ===
+echo "🔍 Checking for whitespace errors..."
+if ! git diff-index --check --cached HEAD --; then
+    echo "❌ Whitespace errors detected."
+    exit 1
+fi
+
+# === 4. Prevent committing .env files ===
+if git diff --cached --name-only | grep -q ".env"; then
+    echo "❌ You tried to commit an .env file. This is not allowed."
+    exit 1
+fi
+
+echo "✅ All checks passed. Proceeding with commit."
