@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Dua extends Model
@@ -15,7 +16,10 @@ class Dua extends Model
         'description',
     ];
 
-    public function verses()
+    /**
+     * @return HasMany<Verse, $this>
+     */
+    public function verses(): HasMany
     {
         return $this->hasMany(Verse::class);
     }

@@ -17,6 +17,9 @@ class Verse extends Model
         'order',
     ];
 
+    /**
+     * @return BelongsTo<Dua, $this>
+     */
     public function dua(): BelongsTo
     {
         return $this->belongsTo(Dua::class);
