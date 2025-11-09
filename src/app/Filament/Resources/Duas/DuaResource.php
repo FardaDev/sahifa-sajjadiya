@@ -20,10 +20,6 @@ class DuaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSun;
 
-
-    /**
-     * @return string|null
-     */
     public static function getModelLabel(): string
     {
         return trans('dua.dua');
@@ -59,5 +55,4 @@ class DuaResource extends Resource
             'edit' => EditDua::route('/{record}/edit'),
         ];
     }
-
 }

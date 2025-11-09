@@ -3,15 +3,16 @@ includes:
     - vendor/nesbot/carbon/extension.neon
 
 parameters:
-
     paths:
-        - app/
+        - app
+        - config
+        - database
+        - routes
 
-    # Level 10 is the highest level
-    level: 5
+    # Level 6 provides strict type checking while remaining practical for Laravel
+    level: 6
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#
-#    excludePaths:
-#        - ./*/*/FileToBeExcluded.php
+    excludePaths:
+        - vendor
+        - storage
+        - bootstrap/cache

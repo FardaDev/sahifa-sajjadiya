@@ -1,0 +1,46 @@
+/**
+ * Filament Custom Styles
+ *
+ * Additional custom styles for Filament admin panel.
+ * Use this file for component-specific customizations.
+ */
+
+/* Custom Filament Component Styles */
+
+/* Example: Custom card styling */
+/*
+.fi-section {
+    @apply rounded-xl shadow-lg;
+}
+*/
+
+/* Example: Custom table styling */
+/*
+.fi-ta-table {
+    @apply rounded-lg overflow-hidden;
+}
+*/
+
+/* Example: Custom form styling */
+/*
+.fi-fo-field-wrp {
+    @apply mb-6;
+}
+*/
+
+/* Admin Panel Specific Utilities */
+@utility fi-custom-header {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600;
+    @apply text-white;
+}
+
+@utility fi-custom-card {
+    @apply bg-white dark:bg-gray-800;
+    @apply rounded-xl shadow-lg;
+    @apply border border-gray-200 dark:border-gray-700;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Mobile-specific Filament customizations */
+}

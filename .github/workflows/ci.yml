@@ -16,30 +16,43 @@ jobs:
   ci:
     name: Run CI Checks
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: src
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: mbstring, bcmath, intl, pdo_mysql
+          extensions: mbstring, bcmath, intl, pdo_mysql, pdo_sqlite, sqlite3
           ini-values: post_max_size=256M, upload_max_filesize=256M
           coverage: none
 
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
       - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --working-dir=src
+        run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Run Laravel Pint (Code Style)
-        run: composer pint -- --test
-        working-directory: src
+        run: vendor/bin/pint --test
 
-      - name: Run PHPStan (Larastan)
-        run: vendor/bin/phpstan analyse --level=5 --configuration=phpstan.neon
-        working-directory: src
+      - name: Run PHPStan (Static Analysis)
+        run: vendor/bin/phpstan analyse
 
-      # Uncomment when tests are ready
-      # - name: Run Tests (PHPUnit / Pest)
-      #   run: vendor/bin/pest --coverage-text
-      #   working-directory: src
+      - name: Run Pest (Tests)
+        run: vendor/bin/pest

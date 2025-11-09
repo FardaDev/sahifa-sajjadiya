@@ -1,0 +1,14 @@
+# Component-Specific Styles
+
+This directory is for component-specific CSS files when Tailwind utility classes aren't sufficient.
+
+## When to use this directory:
+- Complex component styles that require multiple CSS rules
+- Component-specific animations or transitions
+- Styles that are reused across multiple components
+
+## Best Practices:
+- Prefer Tailwind utility classes in Blade components
+- Only create CSS files here when absolutely necessary
+- Use meaningful file names (e.g., `custom-dropdown.css`)
+- Document why custom CSS is needed in comments

@@ -1,0 +1,9 @@
+/**
+ * Filament Admin Panel Styles
+ *
+ * Main entry point for Filament customizations.
+ * Import theme and custom styles here.
+ */
+
+@import "./theme.css";
+@import "./custom.css";

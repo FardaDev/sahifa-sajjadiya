@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/* Base Styles */
+@import "../../base";
+
+/* Fonts */
+@import "../../fonts/vazirmatn";
+
+@source '../../../views/**/*';
+
+/* Configure dark mode to use class-based selector instead of prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Page-specific utilities can be added here */
+@layer utilities {
+  /* Add custom utilities for this page if needed */
+}

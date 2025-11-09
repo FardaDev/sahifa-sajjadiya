@@ -1,0 +1,27 @@
+# Page-Specific Styles
+
+This directory is for page-specific complete CSS files.
+
+## When to use this directory:
+- Landing pages with unique designs
+- Marketing pages with custom layouts
+- Pages that need specific CSS not used elsewhere
+
+## Structure:
+Each page CSS file should import necessary base styles:
+
+```css
+@import "tailwindcss";
+@import "../../base/_variables.css";
+@import "../../base/_base.css";
+@import "../../base/_animations.css";
+@import "../../base/_headings.css";
+@import "../../fonts/index.css";
+
+/* Page-specific styles */
+```
+
+## Example:
+- `welcome.css` - Homepage styles
+- `about.css` - About page styles
+- `pricing.css` - Pricing page styles

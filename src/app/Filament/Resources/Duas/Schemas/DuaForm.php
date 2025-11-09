@@ -28,7 +28,7 @@ class DuaForm
                 TextArea::make('description')
                     ->maxLength(300)
                     ->label(trans('dua.description'))
-                    ->columnSpanFull()
+                    ->columnSpanFull(),
             ]);
     }
 }

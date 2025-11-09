@@ -1,0 +1,25 @@
+# Filament Custom Widgets
+
+This directory contains custom Filament widget views.
+
+## Structure:
+Place your custom Filament widget Blade views here.
+
+## Example:
+```
+filament/widgets/
+├── stats-overview.blade.php
+├── recent-orders.blade.php
+└── revenue-chart.blade.php
+```
+
+## Usage:
+Custom Filament widgets can override default views or create new widgets.
+
+```php
+// app/Filament/Widgets/StatsOverview.php
+class StatsOverview extends Widget
+{
+    protected static string $view = 'filament.widgets.stats-overview';
+}
+```

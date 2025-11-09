@@ -1,0 +1,25 @@
+# Filament Custom Pages
+
+This directory contains custom Filament page views.
+
+## Structure:
+Place your custom Filament page Blade views here.
+
+## Example:
+```
+filament/pages/
+├── settings.blade.php
+├── dashboard.blade.php
+└── reports.blade.php
+```
+
+## Usage:
+Custom Filament pages can override default views or create new pages.
+
+```php
+// app/Filament/Pages/Settings.php
+class Settings extends Page
+{
+    protected static string $view = 'filament.pages.settings';
+}
+```

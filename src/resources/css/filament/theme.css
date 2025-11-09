@@ -1,0 +1,40 @@
+/**
+ * Filament Theme Customization
+ *
+ * Customize Filament's theme colors, fonts, and components here.
+ * This file imports Tailwind and base variables for consistency.
+ */
+
+@import 'tailwindcss';
+
+@import "../base/_variables.css";
+@import "../fonts/index.css";
+
+@import '../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../app/Filament/**/*';
+@source '../../../vendor/filament/**/*.blade.php';
+@source '../../../resources/views/**/*';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Filament Theme Customizations */
+/* Add your Filament-specific theme overrides here */
+
+/* Example: Custom primary color for Filament */
+/*
+:root {
+    --primary: theme('colors.blue.600');
+    --primary-50: theme('colors.blue.50');
+    --primary-100: theme('colors.blue.100');
+    --primary-200: theme('colors.blue.200');
+    --primary-300: theme('colors.blue.300');
+    --primary-400: theme('colors.blue.400');
+    --primary-500: theme('colors.blue.500');
+    --primary-600: theme('colors.blue.600');
+    --primary-700: theme('colors.blue.700');
+    --primary-800: theme('colors.blue.800');
+    --primary-900: theme('colors.blue.900');
+    --primary-950: theme('colors.blue.950');
+}
+*/

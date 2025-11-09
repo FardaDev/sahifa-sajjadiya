@@ -1,7 +1,8 @@
 <?php
 
 test('the application returns a successful response', function () {
-    $response = $this->get('/');
+    // Use withoutVite() to prevent Vite manifest errors in tests
+    $response = $this->withoutVite()->get('/');
 
     $response->assertStatus(200);
 });

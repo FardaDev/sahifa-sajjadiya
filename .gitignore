@@ -7,3 +7,5 @@
 /.phpunit.cache
 /.vscode
 /.zed
+/.cursor
+/.kiro
