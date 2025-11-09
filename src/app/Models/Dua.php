@@ -14,4 +14,9 @@ class Dua extends Model
         'title',
         'description',
     ];
+
+    public function verses()
+    {
+        return $this->hasMany(Verse::class);
+    }
 }
