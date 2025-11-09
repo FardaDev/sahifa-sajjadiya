@@ -1,27 +1,23 @@
 name: Deploy
 
-# DEPLOYMENT WORKFLOW - Currently disabled
-# To enable: Remove the line "on: []" below and uncomment the triggers
-on: []
-# Uncomment below to enable:
-# on:
-#   workflow_run:
-#     workflows: ["CI Checks"]
-#     types:
-#       - completed
-#     branches:
-#       - main
-#       - staging
-#   workflow_dispatch:
-#     inputs:
-#       environment:
-#         description: 'Environment to deploy'
-#         required: true
-#         type: choice
-#         options:
-#           - dev
-#           - staging
-#           - production
+on:
+  workflow_run:
+    workflows: ["CI Checks"]
+    types:
+      - completed
+    branches:
+      - main
+      - staging
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
 
 jobs:
   deploy:
