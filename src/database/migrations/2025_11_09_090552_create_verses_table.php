@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->softDeletes()->index();
 
             $table->index(['created_at']);
+            $table->unique(['dua_id', 'order']);
         });
     }
 
