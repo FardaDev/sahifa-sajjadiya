@@ -17,7 +17,7 @@ class DuasTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('number', 'asc')
             ->columns([
                 TextColumn::make('number')
                     ->label(trans('dua.number'))
