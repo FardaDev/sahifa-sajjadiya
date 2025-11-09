@@ -12,8 +12,11 @@
 */
 
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
+
+pest()->extend(Tests\TestCase::class)
+    ->in('Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +48,57 @@ function something()
 {
     // ..
 }
+
+/*
+|--------------------------------------------------------------------------
+| Architecture Tests
+|--------------------------------------------------------------------------
+|
+| Architecture tests ensure that the codebase follows Laravel and Filament
+| conventions and best practices. These tests run automatically with the
+| test suite and help maintain code quality and consistency.
+|
+*/
+
+// Models should extend Eloquent Model
+arch('models')
+    ->expect('App\Models')
+    ->toExtend('Illuminate\Database\Eloquent\Model')
+    ->toOnlyBeUsedIn([
+        'App\Models',
+        'App\Http\Controllers',
+        'App\Filament\Resources',
+        'App\Policies',
+        'Database\Factories',
+        'Database\Seeders',
+    ]);
+
+// Controllers should have Controller suffix and be in correct namespace
+arch('controllers')
+    ->expect('App\Http\Controllers')
+    ->toHaveSuffix('Controller')
+    ->toOnlyBeUsedIn([
+        'App\Http\Controllers',
+        'App\Providers',
+    ]);
+
+// Filament resources should follow naming conventions
+arch('filament resources')
+    ->expect('App\Filament\Resources')
+    ->toHaveSuffix('Resource')
+    ->toExtend('Filament\Resources\Resource');
+
+// Prevent debugging functions in production code
+arch('no debugging functions')
+    ->expect(['dd', 'dump', 'ray', 'var_dump', 'print_r'])
+    ->not->toBeUsed();
+
+// Ensure strict types are declared
+arch('strict types')
+    ->expect('App')
+    ->toUseStrictTypes();
+
+// Ensure no exit or die statements
+arch('no exit or die')
+    ->expect(['exit', 'die'])
+    ->not->toBeUsed();

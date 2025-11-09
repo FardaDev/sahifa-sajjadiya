@@ -1,0 +1,15 @@
+@utility vazirmatn_persian_numbers_on {
+  font-feature-settings: 'ss01';
+}
+
+@utility vazirmatn_persian_numbers_off {
+  font-feature-settings: 'ss01' off;
+}
+
+@utility vazirmatn_tabular_numbers_on {
+  font-feature-settings: 'tnum';
+}
+
+@utility vazirmatn_tabular_numbers_off {
+  font-feature-settings: 'tnum' off;
+}

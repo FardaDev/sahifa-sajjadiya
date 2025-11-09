@@ -5,9 +5,17 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            // CSS and JavaScript entry points
+            input: [
+                'resources/css/filament/index.css',     // Filament admin panel CSS
+
+                'resources/css/laravel/pages/home.css', // Home page CSS
+                'resources/js/laravel/pages/home.js',   // Main application JavaScript
+            ],
+            // Enable hot reload for development
             refresh: true,
         }),
+        // Tailwind CSS v4 plugin
         tailwindcss(),
     ],
 });

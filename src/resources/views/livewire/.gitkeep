@@ -1,0 +1,28 @@
+# Livewire Component Views
+
+This directory contains Livewire component views.
+
+## Structure:
+Place your Livewire component Blade views here.
+
+## Example:
+```
+livewire/
+├── user-profile.blade.php
+├── post-list.blade.php
+└── comment-form.blade.php
+```
+
+## Usage:
+Livewire components automatically look for views in this directory.
+
+```php
+// app/Livewire/UserProfile.php
+class UserProfile extends Component
+{
+    public function render()
+    {
+        return view('livewire.user-profile');
+    }
+}
+```

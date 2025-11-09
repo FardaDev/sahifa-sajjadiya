@@ -1,0 +1,65 @@
+#!/bin/sh
+# Laravel pre-commit hook
+# Runs Pint, PHPStan, and whitespace checks before committing.
+# Automatically trims trailing whitespace from staged files.
+
+set -e
+exec 1>&2
+
+# Get the project root directory
+PROJECT_ROOT="$(git rev-parse --show-toplevel)"
+cd "$PROJECT_ROOT"
+
+# Check if vendor directory exists
+if [ ! -d "src/vendor" ]; then
+    echo "⚠️  Vendor directory not found. Please run 'composer install' first."
+    exit 1
+fi
+
+# === 0. Auto-trim trailing whitespace in staged files ===
+echo "✂️  Trimming trailing whitespace in staged files..."
+git diff --cached --name-only --diff-filter=ACM | while read file; do
+    if [ -f "$file" ]; then
+        # Trim trailing whitespace using sed (available in Git Bash on all platforms)
+        sed -i.bak 's/[[:space:]]*$//' "$file" && rm -f "$file.bak"
+        git add "$file"
+    fi
+done
+
+# === 1. Run Laravel Pint ===
+echo "🔍 Running Laravel Pint..."
+cd "$PROJECT_ROOT/src"
+if ! vendor/bin/pint --test > /dev/null 2>&1; then
+    echo "⚠️  Pint found code style issues. Fixing..."
+    vendor/bin/pint
+    echo "✅  Pint auto-fixed your code. Please stage your changes again and re-commit."
+    exit 1
+else
+    echo "✅ Code style OK."
+fi
+
+# === 2. Run PHPStan (Larastan) ===
+echo "🔍 Running PHPStan (Larastan)..."
+if ! vendor/bin/phpstan analyse --configuration=phpstan.neon --no-progress > /dev/null 2>&1; then
+    echo "⚠️ PHPStan found issues. Please fix before committing."
+    vendor/bin/phpstan analyse --configuration=phpstan.neon
+    exit 1
+else
+    echo "✅ PHPStan check passed."
+fi
+
+# === 3. Check for remaining whitespace errors ===
+echo "🔍 Checking for whitespace errors..."
+cd "$PROJECT_ROOT"
+if ! git diff-index --check --cached HEAD -- 2>/dev/null; then
+    echo "⚠️  Whitespace errors detected (but auto-fixed)."
+fi
+
+# === 4. Prevent committing .env files (but allow .env.example) ===
+if git diff --cached --name-only | grep -E "(^|/)\.env$" | grep -v "\.env\.example$" > /dev/null; then
+    echo "❌ You tried to commit an .env file. This is not allowed."
+    echo "   (.env.example is OK, but .env is not)"
+    exit 1
+fi
+
+echo "✅ All checks passed. Proceeding with commit."

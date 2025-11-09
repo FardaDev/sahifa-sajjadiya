@@ -1,0 +1,33 @@
+# Page-Specific JavaScript
+
+This directory contains page-specific JavaScript files.
+
+## Structure:
+Place your page-specific JavaScript here when needed.
+
+## Example:
+```
+pages/
+├── welcome.js
+├── about.js
+└── contact.js
+```
+
+## Usage:
+Import page-specific JavaScript in your Blade templates:
+
+```blade
+@vite(['resources/js/laravel/pages/welcome.js'])
+```
+
+Or import in home.js if needed globally:
+
+```javascript
+import './laravel/pages/welcome';
+```
+
+## Best Practices:
+- Keep page-specific code isolated
+- Use Alpine.js components for reusable functionality
+- Only create page-specific files when necessary
+- Document dependencies and purpose
